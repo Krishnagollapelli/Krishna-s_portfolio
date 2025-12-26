@@ -272,12 +272,40 @@
   <!-- RIGHT -->
   <div class="contact-right">
     <h1 class="form-heading">Let's work <span>together</span></h1>
-    <form id="contactForm">
-      <input type="text" placeholder="Your Name" required />
-      <input type="email" placeholder="Your Email" required />
-      <textarea placeholder="Your Message" required></textarea>
-      <button type="submit" class="submit-btn">Submit</button>
-    </form>
+    <form id="contactForm" novalidate>
+      <input
+        type="hidden"
+        name="access_key"
+        value="7fd543c0-143d-4370-ac18-110094c50325"
+      />
+      <input
+        type="hidden"
+        name="subject"
+        value="New Contact Message from Portfolio"
+      />
+      <input
+        type="text"
+        name="name"
+        placeholder="Your Name"
+        required
+      />
+      <input
+        type="email"
+        name="email"
+        placeholder="Your Email"
+        required
+      />
+      <textarea
+        name="message"
+        placeholder="Your Message"
+        required
+      ></textarea>
+    
+      <button type="submit" class="submit-btn">
+        Send Message
+      </button>
+  </form>
+
 
   <div class="map-section">
     <p class="location-text">
@@ -309,5 +337,6 @@
 
   </body>
 </html>
+
 
 
