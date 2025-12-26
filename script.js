@@ -86,30 +86,43 @@ document.addEventListener("DOMContentLoaded", () => {
     }).addTo(map);
   }
 });
-emailjs.init("JaAc7fYxE1IVAOe4O");
+const form = document.getElementById("contactForm");
+const submitBtn = form.querySelector('button[type="submit"]');
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("contactForm");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
 
-  if (!form) {
-    console.error("❌ contactForm not found");
-    return;
-  }
+  const formData = new FormData(form);
+  const originalText = submitBtn.textContent;
 
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    console.log("✅ Form submitted");
+  submitBtn.textContent = "Sending...";
+  submitBtn.disabled = true;
 
-    emailjs.sendForm("service_y8q4c19", "template_9x6rstd", this).then(
-      (res) => {
-        console.log("SUCCESS:", res);
-        alert("✅ Message sent successfully!");
-        form.reset();
+  try {
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+      headers: {
+        Accept: "application/json",
       },
-      (err) => {
-        console.error("FAILED:", err);
-        alert("❌ Failed to send message");
-      }
-    );
-  });
+    });
+
+    const result = await response.json();
+
+    if (result.success) {
+      alert("Message sent successfully.");
+      form.reset();
+    } else {
+      console.error(result);
+      alert("Failed to send message. Please try again.");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Network error. Please try again later.");
+  } finally {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+  }
 });
+
+
